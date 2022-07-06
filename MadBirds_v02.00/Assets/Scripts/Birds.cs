@@ -5,20 +5,40 @@ namespace Game
 {
     public class Birds : MonoBehaviour
     {
+        [SerializeField] private float _launchForce = 500;
+        
+        private Vector2 _startposition;
+        private Rigidbody2D _rigidbody2D;
+        private SpriteRenderer _spriteRenderer;
+
+        private void Awake()
+        {
+            _rigidbody2D = GetComponent<Rigidbody2D>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
         // Start is called before the first frame update
         private void Start()
         {
-            GetComponent<Rigidbody2D>().isKinematic = true;
+            _startposition = _rigidbody2D.position;
+            _rigidbody2D.isKinematic = true;
         }
 
         private void OnMouseDown()
         {
-            GetComponent<SpriteRenderer>().color = Color.red;
+            _spriteRenderer.color = Color.red;
         }
 
-        private void OnMouseUp()
+        private void OnMouseUp() 
         {
-            GetComponent<SpriteRenderer>().color = Color.white;
+            Vector2 currentposition = _rigidbody2D.position;
+            Vector2 direction = _startposition - currentposition;
+            direction.Normalize();
+
+            _rigidbody2D.isKinematic = false;
+            _rigidbody2D.AddForce(direction * _launchForce);
+
+            _spriteRenderer.color = Color.white;
         }
 
         private void OnMouseDrag()
