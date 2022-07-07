@@ -1,7 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-
 using UnityEngine;
 
 namespace Game
@@ -17,7 +14,7 @@ namespace Game
         {
             if (ShouldDieFromCollision(col))
             {
-                Die();
+                StartCoroutine(Die());
             }
         }
 
@@ -41,12 +38,14 @@ namespace Game
             return false;
         }
         
-        private void Die()
+        private IEnumerator Die()
         {
+            _hasDied = true;
             GetComponent<SpriteRenderer>().sprite = _deadSprite;
             _particleSystem.Play();
-            _hasDied = true;
-            //gameObject.SetActive(false);
+            
+            yield return new WaitForSeconds(0.7f);
+            gameObject.SetActive(false);
         }
     }
 }

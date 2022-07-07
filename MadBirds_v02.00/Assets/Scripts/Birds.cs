@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -19,7 +18,7 @@ namespace Game
             _spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
-        // Start is called before the first frame update
+        
         private void Start()
         {
             _startposition = _rigidbody2D.position;
@@ -75,11 +74,6 @@ namespace Game
             _rigidbody2D.position = _startposition;
             _rigidbody2D.isKinematic = true;
             _rigidbody2D.velocity = Vector2.zero;
-        }
-
-        private void Update()
-        {
-            
         }
     }
 }
